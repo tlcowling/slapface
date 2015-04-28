@@ -4,6 +4,8 @@
     "host": "0.0.0.0"
   },
   "ldapserver": {
+    "rootCn": "cn=admin",
+    "rootPassword": "secret",
     "host": "127.0.0.1",
     "port": "389"
   }

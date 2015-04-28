@@ -8,10 +8,16 @@ var config     = require('./config.json');
 var log        = require('./lib/logging.js');
 var client     = require('./lib/ldapclient.js');
 
-client.bind('cn=root', 'secret', function(err) {
+var users      = require('./lib/routes/users.js')(log);
+var groups     = require('./lib/routes/groups.js')(log);
+
+client.bind(config.ldapserver.rootCn, config.ldapserver.rootPassword, function(err) {
     log.info(err);
     log.info('ldap not working there yet');
 });
+
+app.use('/api/v1/users', users);
+app.use('/api/v1/groups', groups);
 
 app.get('/version', function(req, res) {
     res.send(pkg.version);
