@@ -1,0 +1,37 @@
+{
+  "name": "slapface-server",
+  "version": "1.0.0",
+  "description": "Simple rest service on for user and group management on top of LDAP",
+  "main": "server.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://www.github.com/tlcowling/slapface.git"
+  },
+  "slapface-server": {
+    "directories": {
+      "test": "test",
+      "dist": "dist"
+    }
+  },
+  "keywords": [
+    "user",
+    "management",
+    "ldap",
+    "webservice"
+  ],
+  "author": "Tom Cowling <tom.cowling@gmail.com>",
+  "license": "Tom Cowling, 2015",
+  "devDependencies": {
+    "chai": "^2.3.0",
+    "del": "^1.1.1",
+    "gulp": "^3.8.11",
+    "gulp-jshint": "^1.10.0",
+    "gulp-load-plugins": "^0.10.0",
+    "jshint-stylish": "^1.0.1",
+    "mocha": "^2.2.4",
+    "run-sequence": "^1.1.0"
+  }
+}
