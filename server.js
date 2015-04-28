@@ -8,12 +8,16 @@ var config     = require('./config.json');
 var log        = require('./lib/logging.js');
 var client     = require('./lib/ldapclient.js');
 
-var users      = require('./lib/routes/users.js')(log);
-var groups     = require('./lib/routes/groups.js')(log);
+var users      = require('./lib/routes/users.js')(client, log);
+var groups     = require('./lib/routes/groups.js')(client, log);
 
 client.bind(config.ldapserver.rootCn, config.ldapserver.rootPassword, function(err) {
-    log.info(err);
-    log.info('ldap not working there yet');
+    if(err) {
+        log.error(err);
+    } else {
+        log.info('Successfully connected to LDAPserver on ' + config.ldapserver.host + ':' + config.ldapserver.port);
+
+    }
 });
 
 app.use('/api/v1/users', users);

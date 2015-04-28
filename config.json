@@ -4,9 +4,9 @@
     "host": "0.0.0.0"
   },
   "ldapserver": {
-    "rootCn": "cn=admin",
+    "rootCn": "cn=admin,dc=local",
     "rootPassword": "secret",
-    "host": "127.0.0.1",
+    "host": "192.168.59.103",
     "port": "389"
   }
 }
