@@ -1,7 +1,7 @@
 var gulp = require('gulp');
 var mocha = require('gulp-mocha');
 var jshint = require('gulp-jshint');
-var uglify = require('gulp-uglifyjs');
+var uglify = require('gulp-uglify');
 var del = require('del');
 var pkg = require('./package.json');
 var dirs = pkg['slapface-server'].directories;
@@ -37,9 +37,9 @@ gulp.task('compress:server', function() {
 });
 
 gulp.task('compress:lib', function() {
-    return gulp.src(dirs.src + '/**/*.js')
+    return gulp.src(['lib/**/*.js'])
         .pipe(uglify())
-        .pipe(gulp.dest(dirs.dist + '/' + dirs.src));
+        .pipe(gulp.dest('dist/lib/'));
 });
 
 gulp.task('test', function () {
@@ -48,7 +48,7 @@ gulp.task('test', function () {
         .pipe(mocha({reporter: 'nyan'}));
 });
 
-gulp.task('build', ['clean', 'lint:js', 'dist']);
+gulp.task('build', [ 'clean', 'lint:js', 'dist']);
 
 gulp.task('default', ['build']);
 
