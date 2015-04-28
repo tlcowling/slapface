@@ -1,7 +1,7 @@
 var gulp = require('gulp');
-var plugins = require('gulp-load-plugins')(); // Load all gulp plugins
-                                              // automatically and attach
-                                              // them to the `plugins` object
+var mocha = require('gulp-mocha');
+var jshint = require('gulp-jshint');
+
 
 var runSequence = require('run-sequence');    // Temporary solution until gulp 4
                                               // https://github.com/gulpjs/gulp/issues/355
@@ -23,15 +23,21 @@ gulp.task('lint:js', function () {
         dirs.src + '/js/*.js',
         dirs.test + '/*.js'
     ])
-      .pipe(plugins.jshint())
-      .pipe(plugins.jshint.reporter('jshint-stylish'))
-      .pipe(plugins.jshint.reporter('fail'));
+      .pipe(jshint())
+      .pipe(jshint.reporter('jshint-stylish'))
+      .pipe(jshint.reporter('fail'));
 });
 
 
 // ---------------------------------------------------------------------
 // | Main tasks                                                        |
 // ---------------------------------------------------------------------
+
+gulp.task('test', function () {
+    return gulp.src('spec/**/*.js', {read: false})
+        // gulp-mocha needs filepaths so you can't have any plugins before it
+        .pipe(mocha({reporter: 'nyan'}));
+});
 
 gulp.task('build', function (done) {
     runSequence(
