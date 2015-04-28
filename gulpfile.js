@@ -1,6 +1,8 @@
 var gulp = require('gulp');
 var mocha = require('gulp-mocha');
 var jshint = require('gulp-jshint');
+var concat = require('gulp-concat');
+var uglify = require('gulp-uglifyjs');
 
 
 var runSequence = require('run-sequence');    // Temporary solution until gulp 4
@@ -32,6 +34,33 @@ gulp.task('lint:js', function () {
 // ---------------------------------------------------------------------
 // | Main tasks                                                        |
 // ---------------------------------------------------------------------
+gulp.task('dist', function() {
+
+});
+
+gulp.task('compress', ['copy:modules', 'compress:configs', 'compress:server', 'compress:lib']);
+
+//gulp.task('copy:modules', function() {
+//    return gulp.src('node_modules')
+//        .pipe(gulp.dest('dist'));
+//});
+
+gulp.task('compress:configs', function() {
+    return gulp.src(['config.json', 'package.json'])
+        .pipe(gulp.dest('dist'));
+});
+
+gulp.task('compress:server', function() {
+    return gulp.src('server.js')
+        .pipe(uglify())
+        .pipe(gulp.dest('dist'));
+});
+
+gulp.task('compress:lib', function() {
+    return gulp.src('lib/**/*.js')
+        .pipe(uglify())
+        .pipe(gulp.dest('dist/lib'));
+});
 
 gulp.task('test', function () {
     return gulp.src('spec/**/*.js', {read: false})
@@ -41,8 +70,9 @@ gulp.task('test', function () {
 
 gulp.task('build', function (done) {
     runSequence(
-        ['clean', 'lint:js'],
+        ['clean', 'lint:js', 'dist'],
     done);
 });
 
 gulp.task('default', ['build']);
+
