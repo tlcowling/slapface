@@ -3,25 +3,20 @@ var mocha = require('gulp-mocha');
 var jshint = require('gulp-jshint');
 var uglify = require('gulp-uglifyjs');
 var del = require('del');
-
-var runSequence = require('run-sequence');    // Temporary solution until gulp 4
-                                              // https://github.com/gulpjs/gulp/issues/355
 var pkg = require('./package.json');
 var dirs = pkg['slapface-server'].directories;
 
-
 gulp.task('clean', function () {
-    del ([
+    del.sync ([
         dirs.dist
     ], {force: true});
 });
 
-
 gulp.task('lint:js', function () {
     return gulp.src([
         'gulpfile.js',
-        dirs.src + '/js/*.js',
-        dirs.test + '/*.js'
+        dirs.src + '/**/*.js',
+        'server.js'
     ])
       .pipe(jshint())
       .pipe(jshint.reporter('jshint-stylish'))
@@ -32,19 +27,19 @@ gulp.task('dist', [ 'compress:configs', 'compress:server', 'compress:lib']);
 
 gulp.task('compress:configs', function() {
     return gulp.src(['config.json', 'package.json'])
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest(dirs.dist));
 });
 
 gulp.task('compress:server', function() {
     return gulp.src('server.js')
         .pipe(uglify())
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest(dirs.dist));
 });
 
 gulp.task('compress:lib', function() {
-    return gulp.src('lib/**/*.js')
+    return gulp.src(dirs.src + '/**/*.js')
         .pipe(uglify())
-        .pipe(gulp.dest('dist/lib'));
+        .pipe(gulp.dest(dirs.dist + '/' + dirs.src));
 });
 
 gulp.task('test', function () {
@@ -53,11 +48,7 @@ gulp.task('test', function () {
         .pipe(mocha({reporter: 'nyan'}));
 });
 
-gulp.task('build', function (done) {
-    runSequence(
-        ['clean', 'lint:js', 'dist'],
-    done);
-});
+gulp.task('build', ['clean', 'lint:js', 'dist']);
 
 gulp.task('default', ['build']);
 

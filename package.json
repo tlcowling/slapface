@@ -13,6 +13,7 @@
   "slapface-server": {
     "directories": {
       "test": "spec",
+      "src": "lib",
       "dist": "dist"
     }
   },

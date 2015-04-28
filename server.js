@@ -9,13 +9,14 @@ var log        = require('./lib/logging.js');
 var client     = require('./lib/ldapclient.js');
 
 client.bind('cn=root', 'secret', function(err) {
+    log.info(err);
     log.info('ldap not working there yet');
 });
 
-app.get('/version', function(req, res, next) {
+app.get('/version', function(req, res) {
     res.send(pkg.version);
 });
 
-app.listen(config.app.port, function(req, res, next) {
+app.listen(config.app.port, function() {
     log.info('listening on port ' + config.app.port);
 });
