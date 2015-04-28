@@ -1,21 +1,19 @@
 var gulp = require('gulp');
 var mocha = require('gulp-mocha');
 var jshint = require('gulp-jshint');
-var concat = require('gulp-concat');
 var uglify = require('gulp-uglifyjs');
-
+var del = require('del');
 
 var runSequence = require('run-sequence');    // Temporary solution until gulp 4
                                               // https://github.com/gulpjs/gulp/issues/355
-
 var pkg = require('./package.json');
 var dirs = pkg['slapface-server'].directories;
 
 
-gulp.task('clean', function (done) {
-    require('del')([
+gulp.task('clean', function () {
+    del ([
         dirs.dist
-    ], done);
+    ], {force: true});
 });
 
 
@@ -30,20 +28,7 @@ gulp.task('lint:js', function () {
       .pipe(jshint.reporter('fail'));
 });
 
-
-// ---------------------------------------------------------------------
-// | Main tasks                                                        |
-// ---------------------------------------------------------------------
-gulp.task('dist', function() {
-
-});
-
-gulp.task('compress', ['copy:modules', 'compress:configs', 'compress:server', 'compress:lib']);
-
-//gulp.task('copy:modules', function() {
-//    return gulp.src('node_modules')
-//        .pipe(gulp.dest('dist'));
-//});
+gulp.task('dist', [ 'compress:configs', 'compress:server', 'compress:lib']);
 
 gulp.task('compress:configs', function() {
     return gulp.src(['config.json', 'package.json'])
