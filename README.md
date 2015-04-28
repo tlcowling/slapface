@@ -6,17 +6,23 @@ Slapface Server
 This is an ldapserver with a restful interface for creating users and groups. 
 
 ### Dev environment
-You'll need node, npm to run locally, logging is done with bunyan, 
+You'll need node, npm to run locally 
 
-1. run ````npm install``` to get the dependencies
+1. run ````npm install```` to get the dependencies
 
 2. To run the tests, use ````gulp test````
 
 3. To build, run ````gulp````
 
+4. Start the server ````node server.js | node_modules/bunyan/bin/bunyan````
+
+5. If successful check it works ````curl http://localhost:3004/version````
+
 ####Optionally 
 
-Build a docker container, after ````gulp```` run
+Build the docker container - you will need... [docker (instructions here)](https://docs.docker.com/installation/)
+
+After creating the dist directory with ````gulp```` run
 
 ````docker build -t tlcowling/slapface .````
 
