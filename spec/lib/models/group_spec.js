@@ -37,6 +37,5 @@ describe("An ldap group", function() {
     });
 
     describe("validation", function() {
-        it();
     });
 });
