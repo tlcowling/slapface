@@ -1,5 +1,5 @@
-Slapface Server
-===============
+Slapface Server [![Build Status](https://travis-ci.org/tlcowling/slapface.svg)](https://travis-ci.org/tlcowling/slapface)
+================
 
 ### Introduction
 
