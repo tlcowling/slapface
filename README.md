@@ -3,7 +3,7 @@ Slapface Server [![Build Status](https://travis-ci.org/tlcowling/slapface.svg)](
 
 ### Introduction
 
-This is an ldapserver with a restful interface for creating users and groups. 
+This is a web service that connects to an ldapserver with a restful interface for creating posix users and posix groups. 
 
 ### Dev environment
 You'll need node, npm to run locally 

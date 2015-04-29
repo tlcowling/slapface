@@ -8,13 +8,11 @@ describe('Ldap user model', function() {
             var user = new User({
                 "firstname"    : 'Tom',
                 "surname"      : 'McGiblets',
-                "emailaddress" : 'tom.mcgiblets@gmail.com',
                 "password"     : 'Soon to be hashed'
             });
 
             expect(user.firstname()).to.equal('Tom');
             expect(user.surname()).to.equal('McGiblets');
-            expect(user.emailaddress()).to.equal('tom.mcgiblets@gmail.com');
             expect(user.ldapObjectClass()).to.deep.equal(['top', 'person', 'posixAccount']);
         });
 
@@ -32,7 +30,6 @@ describe('Ldap user model', function() {
             var user = new User({
                 "firstname"    : 'Tom',
                 "surname"      : 'McGiblets',
-                "emailaddress" : 'tom.mcgiblets@gmail.com',
                 "password"     : 'Soon to be hashed'
             });
 
@@ -40,7 +37,6 @@ describe('Ldap user model', function() {
 
             expect(toLdapObject).to.have.deep.property('cn', user.firstname());
             expect(toLdapObject).to.have.deep.property('sn', user.surname());
-            expect(toLdapObject).to.have.deep.property('email', user.emailaddress());
             expect(toLdapObject).to.have.deep.property('objectclass[0]', 'top');
             expect(toLdapObject).to.have.deep.property('objectclass[1]', 'person');
             expect(toLdapObject).to.have.deep.property('objectclass[2]', 'posixAccount');
@@ -50,7 +46,6 @@ describe('Ldap user model', function() {
             var userAccountWithUidSameAsFirstName = new User({
                 "firstname": 'Tom',
                 "surname": 'McGiblets',
-                "emailaddress": 'tom.mcgiblets@gmail.com',
                 "password": 'Soon to be hashed'
             });
 
@@ -62,7 +57,6 @@ describe('Ldap user model', function() {
                 "firstname"    : 'Tom',
                 "surname"      : 'McGiblets',
                 "username"     : 'littletom',
-                "emailaddress" : 'tom.mcgiblets@gmail.com',
                 "password"     : 'Soon to be hashed'
             });
 
