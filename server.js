@@ -32,7 +32,7 @@ client.add('ou=People,dc=local', peopleOrganizationalUnit, function(err) {
     }
 });
 
-client.add('ou=Group,dc=local', groupOrganizationalUnit, function(err) {
+client.add('ou=Groups,dc=local', groupOrganizationalUnit, function(err) {
     if(err) {
         log.error(err.message);
     } else {
