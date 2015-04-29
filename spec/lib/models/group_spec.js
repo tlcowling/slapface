@@ -6,8 +6,8 @@ describe("An ldap group", function() {
     describe("attributes", function() {
         it("should have the attributes of a posix group", function() {
             var group = new Group({
-                groupname: 'something',
-                gidNumber: '12039'
+                groupname   : 'something',
+                gid         : '12039'
             });
 
             expect(group.groupname()).to.equal('something');

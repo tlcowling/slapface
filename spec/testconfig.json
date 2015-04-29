@@ -1,0 +1,12 @@
+{
+  "app": {
+    "port": "3004",
+    "host": "0.0.0.0"
+  },
+  "ldapserver": {
+    "rootCn": "cn=admin,dc=local",
+    "rootPassword": "secret",
+    "host": "192.168.59.103",
+    "port": "389"
+  }
+}

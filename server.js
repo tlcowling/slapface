@@ -1,57 +1,59 @@
-/**
- * Created by tcowling on 28/04/15.
- */
-var express    = require('express');
-var app        = express();
-var pkg        = require('./package.json');
-var config     = require('./config.json');
-var log        = require('./lib/logging.js');
-var client     = require('./lib/ldapclient.js');
+(function() {
+    module.exports = function(config, log) {
+        var express    = require('express');
+        var app        = express();
+        var pkg        = require('./package.json');
 
-var users      = require('./lib/routes/users.js')(client, log);
-var groups     = require('./lib/routes/groups.js')(client, log);
+        var client     = require('./lib/ldapclient.js');
 
-var bodyParser = require('body-parser');
+        var users      = require('./lib/routes/users.js')(client, log);
+        var groups     = require('./lib/routes/groups.js')(client, log);
 
-client.bind(config.ldapserver.rootCn, config.ldapserver.rootPassword, function(err) {
-    if(err) {
-        log.error(err);
-    } else {
-        log.info('Successfully connected to LDAPserver on ' + config.ldapserver.host + ':' + config.ldapserver.port);
-    }
-});
+        var bodyParser = require('body-parser');
 
-var peopleOrganizationalUnit = { objectclass: ['top', 'organizationalUnit'] };
-var groupOrganizationalUnit = { objectclass: ['top', 'organizationalUnit'] };
+        client.bind(config.ldapserver.rootCn, config.ldapserver.rootPassword, function(err) {
+            if(err) {
+                log.error(err);
+            } else {
+                log.info('Successfully connected to LDAPserver on ' + config.ldapserver.host + ':' + config.ldapserver.port);
+            }
+        });
 
-client.add('ou=People,dc=local', peopleOrganizationalUnit, function(err) {
-    if(err) {
-        log.error(err.message);
-    } else {
-        log.info('successfully added peoples organizational group');
-    }
-});
+        var peopleOrganizationalUnit = { objectclass: ['top', 'organizationalUnit'] };
+        var groupOrganizationalUnit = { objectclass: ['top', 'organizationalUnit'] };
 
-client.add('ou=Groups,dc=local', groupOrganizationalUnit, function(err) {
-    if(err) {
-        log.error(err.message);
-    } else {
-        log.info('successfully added groups organizational group');
-    }
-});
+        client.add('ou=People,dc=local', peopleOrganizationalUnit, function(err) {
+            if(err) {
+                log.error(err.message);
+            } else {
+                log.info('successfully added peoples organizational group');
+            }
+        });
 
-app.use( bodyParser.json() );       // to support JSON-encoded bodies
-app.use( bodyParser.urlencoded ({     // to support URL-encoded bodies
-    extended: true
-}));
+        client.add('ou=Groups,dc=local', groupOrganizationalUnit, function(err) {
+            if(err) {
+                log.error(err.message);
+            } else {
+                log.info('successfully added groups organizational group');
+            }
+        });
 
-app.use('/api/v1/users', users);
-app.use('/api/v1/groups', groups);
+        app.use( bodyParser.json() );       // to support JSON-encoded bodies
+        app.use( bodyParser.urlencoded ({     // to support URL-encoded bodies
+            extended: true
+        }));
 
-app.get('/version', function(req, res) {
-    res.send(pkg.version);
-});
+        app.use('/api/v1/users', users);
+        app.use('/api/v1/groups', groups);
 
-app.listen(config.app.port, function() {
-    log.info('listening on port ' + config.app.port);
-});
+        app.get('/version', function(req, res) {
+            res.send(pkg.version);
+        });
+
+        app.listen(config.app.port, function() {
+            log.info('listening on port ' + config.app.port);
+        });
+
+        return app;
+    };
+})();

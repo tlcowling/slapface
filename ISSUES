@@ -1,2 +1,4 @@
 No check on the modification of value already existing.
 Validation of the fields that are being passed.
+SSL connections
+Authentication /Authorization

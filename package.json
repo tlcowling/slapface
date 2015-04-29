@@ -2,9 +2,9 @@
   "name": "slapface-server",
   "version": "1.0.0",
   "description": "Simple rest service on for user and group management on top of LDAP",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "test": "gulp test"
+    "test": "mocha spec/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -39,6 +39,7 @@
     "mocha": "^2.2.4",
     "node-optimize": "^1.1.1",
     "run-sequence": "^1.1.0",
+    "supertest": "^0.15.0",
     "uglify-js": "^2.4.20"
   },
   "dependencies": {
