@@ -2,3 +2,7 @@ No check on the modification of value already existing.
 Validation of the fields that are being passed.
 SSL connections
 Authentication /Authorization
+
+How to change password of admin?
+- Original login allows admin access to change admin password, any cn and password etc
+- Individual people can log in as themselves and change only them
